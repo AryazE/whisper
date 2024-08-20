@@ -47,4 +47,9 @@ jobs:
       - uses: actions/checkout@v3
       - run: echo "$CONDA/envs/test/bin" >> $GITHUB_PATH
       - run: pip install -e .["dev"]
+      - name: Instrument code
+        uses: AryazE/auto-dylin/instrument@main
       - run: pytest --durations=0 -vv -k 'not test_transcribe or test_transcribe[tiny] or test_transcribe[tiny.en]' -m 'not requires_cuda'
+      - name: Report results
+        if: always()
+        uses: AryazE/auto-dylin/report@main
